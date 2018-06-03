@@ -3,3 +3,5 @@ build
 npm-debug.log
 .env
 .DS_Store
+.vs/ng-cli-mean-app/v15/.suo
+.vs/slnx.sqlite
