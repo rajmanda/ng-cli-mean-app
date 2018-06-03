@@ -8,10 +8,30 @@ import { Video } from "../video";
   providers: [VideoService]
 })
 export class VideoCenterComponent implements OnInit {
+
   selectedVideo: Video;
   private hidenewVideo: boolean = true;
   videos: Array<Video>;
+
+  
+
   constructor(private _videoService: VideoService) { }
+
+
+
+  /**Start
+   */
+
+  selectedFile = null;
+  onFileSelected(event) {
+    this.selectedFile = event.target.files[0];
+    console.log('this.selectedFile', this.selectedFile);
+  }
+
+   /**End
+   */
+
+
 
   ngOnInit() {
     this._videoService.getVideos()
@@ -28,6 +48,8 @@ export class VideoCenterComponent implements OnInit {
   }
 
   onSubmitAddVideo(video: Video) {
+    console.log('this.selectedFile', this.selectedFile);
+    video.image = this.selectedFile;
     this._videoService.addVideo(video)
       .subscribe(resNewVideo => {
         this.videos.push(resNewVideo);
