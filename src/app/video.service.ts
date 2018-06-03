@@ -21,21 +21,18 @@ export class VideoService {
   }
 
   addVideo(video: Video) {
+    //console.log('Adding videi' + video);
+    //console.log('Adding videi' + video.image);
 
-    this.uvideo._id = video._id;
-    this.uvideo.description = video.description;
-    this.uvideo.title = video.title;
+    var payload = new FormData();
 
-    const findstring = 'watch?v=';
+    payload.append("title", video.title);
+    payload.append('description', video.description);
+    payload.append('image', video.image);
+    payload.append('url', video.url);
 
-    if (video.url.indexOf(findstring) >= 0) {
-      this.uvideo.url = video.url.replace(findstring, 'embed/');
-    } 
-    
-    
-    let headers = new Headers({ 'Content-Type': 'application/json' });
-    let options = new RequestOptions({ headers: headers });
-    return this._http.post(this._postUrl, JSON.stringify(this.uvideo), options)
+
+    return this._http.post(this._postUrl, payload)
       .map((response: Response) => response.json());
   }
 
