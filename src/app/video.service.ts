@@ -38,10 +38,14 @@ export class VideoService {
 
   uvideo: Video = new Video();
   updateVideo(video: Video) {
-     
+
+    this.uvideo._id = video._id;
+    this.uvideo.description = video.description;
+    this.uvideo.title = video.title;
+
     let headers = new Headers({ 'Content-Type': 'application/json' });
     let options = new RequestOptions({ headers: headers });
-    return this._http.put(this._putUrl + this.uvideo._id, JSON.stringify(video), options)
+    return this._http.put(this._putUrl + this.uvideo._id, JSON.stringify(this.uvideo), options)
       .map((response: Response) => response.json());
   }
 
