@@ -42,6 +42,7 @@ export class VideoService {
     this.uvideo._id = video._id;
     this.uvideo.description = video.description;
     this.uvideo.title = video.title;
+    this.uvideo.url = video.url;
 
     let headers = new Headers({ 'Content-Type': 'application/json' });
     let options = new RequestOptions({ headers: headers });
