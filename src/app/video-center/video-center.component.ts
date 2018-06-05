@@ -1,6 +1,8 @@
 import { VideoService } from './../video.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewContainerRef} from '@angular/core';
 import { Video } from "../video";
+import { ToastsManager } from 'ng2-toastr/ng2-toastr';
+
 @Component({
   selector: 'app-video-center',
   templateUrl: './video-center.component.html',
@@ -15,9 +17,12 @@ export class VideoCenterComponent implements OnInit {
 
   
 
-  constructor(private _videoService: VideoService) { }
-
-
+  constructor(private toastr: ToastsManager, 
+                      vcr: ViewContainerRef, 
+                      private _videoService: VideoService,
+                      ) {
+    this.toastr.setRootViewContainerRef(vcr);
+  }
 
   /**Start
    */
@@ -49,6 +54,18 @@ export class VideoCenterComponent implements OnInit {
 
   onSubmitAddVideo(video: Video) {
     console.log('this.selectedFile', this.selectedFile);
+    
+    if(this.selectedFile.size > (1024 * 1024 *10) ){
+      this.toastr.error('File size is too big - Please select an image less than 10 MB');
+    }
+    
+    if(this.selectedFile.type != 'image/jpeg' && 
+       this.selectedFile.type != 'image/jpg' &&
+       this.selectedFile.type != 'image/png') {
+       this.toastr.error('Wrong file type. Please Select image with .jpeg extension');
+    }
+    
+
     video.image = this.selectedFile;
     this._videoService.addVideo(video)
       .subscribe(resNewVideo => {

@@ -21,8 +21,6 @@ export class VideoService {
   }
 
   addVideo(video: Video) {
-    //console.log('Adding videi' + video);
-    //console.log('Adding videi' + video.image);
 
     var payload = new FormData();
 
@@ -30,8 +28,9 @@ export class VideoService {
     payload.append('description', video.description);
     payload.append('image', video.image);
     payload.append('url', video.url);
+    payload.append('password', video.password);
 
-
+    console.log('payload', payload) ;
     return this._http.post(this._postUrl, payload)
       .map((response: Response) => response.json());
   }

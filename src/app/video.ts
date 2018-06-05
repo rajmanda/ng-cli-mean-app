@@ -5,4 +5,5 @@ export class Video {
     url:string;
     description: string;
     image: string; 
+    password: string; 
 }
